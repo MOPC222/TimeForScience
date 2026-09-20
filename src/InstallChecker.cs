@@ -33,9 +33,8 @@ namespace TimeForScience
 
         protected void Start()
         {
-            // Piggybacks on this class's existing MainMenu timing instead of
-            // adding a whole addon for one call. Safe even if RealBattery
-            // isn't installed.
+            // Piggybacks on this class's MainMenu timing instead of adding a
+            // whole addon for one call. Safe even if RealBattery is absent.
             RealBatteryPowerLedgerWrapper.Init();
 
             // Detect this mod's DLL loaded from anywhere other than the expected path

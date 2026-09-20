@@ -8,7 +8,11 @@
     <RootNamespace>TimeForScience</RootNamespace>
     <Version>0.2.1</Version>
     <DebugType>none</DebugType>
+    <!-- KSP install used for reference assemblies; override with -p:KspRoot=... -->
+    <KspRoot Condition="'$(KspRoot)' == ''">E:\SteamBackup\Kerbal Space Program</KspRoot>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Where every build drops the plugin for KSP to load -->
+    <DeployFolder>$(MSBuildProjectDirectory)\..\GameData\TimeForScience\Plugins\</DeployFolder>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,30 +22,33 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(MSBuildProjectDirectory)\..\..\..\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(KspRoot)\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(MSBuildProjectDirectory)\..\..\..\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(KspRoot)\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(MSBuildProjectDirectory)\..\..\..\KSP_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(KspRoot)\KSP_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>$(MSBuildProjectDirectory)\..\..\000_Harmony\0Harmony.dll</HintPath>
+      <HintPath>$(KspRoot)\GameData\000_Harmony\0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
 
-  <!-- Deploy the plugin DLL into the mod folder KSP actually loads. Path
-       reflects the 2026-07-23 reorg: publishable folders (Config,
-       Localization, Plugins) now live under a nested GameData/TimeForScience/
-       that mirrors the GitHub repo layout - see CLAUDE.md "Layout della
-       cartella". -->
+  <ItemGroup>
+    <!-- Make the deployed copy visible to VS's fast up-to-date check, so it
+         never skips a build that would refresh it -->
+    <UpToDateCheckOutput Include="$(DeployFolder)$(AssemblyName).dll" />
+  </ItemGroup>
+
+  <!-- Deploy the plugin DLL into the publishable GameData/TimeForScience/. -->
   <Target Name="DeployToGameData" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)\..\GameData\TimeForScience\Plugins\" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployFolder)" SkipUnchangedFiles="false" />
+    <Message Importance="high" Text="Deployed $(TargetFileName) -&gt; $(DeployFolder)" />
   </Target>
 
 </Project>

@@ -3,12 +3,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Stock's OnScienceComplete/resetExperiment stubs are too small for
-    /// Harmony to detour (Mono inlines them), so this patches their coroutine
-    /// MoveNext instead - state 0 is the run's first step, before any stock
-    /// completion logic runs.
-    /// </summary>
+    /// <summary>Stock's OnScienceComplete/resetExperiment stubs are too small
+    /// for Harmony to detour (Mono inlines them), so we patch their coroutine
+    /// MoveNext: state 0 is the first step, before any stock logic.</summary>
     [HarmonyPatch]
     internal static class Patch_OnScienceCompleteDelay_MoveNext
     {
@@ -40,8 +37,7 @@ namespace TimeForScience
             }
 
             // No GetType() check needed: this coroutine is private/non-virtual,
-            // so subclasses only reach it via an explicit base call - DMagic/
-            // US2 have their own independent deploy flow and their own patch.
+            // and DMagic/US2 have their own deploy flow and their own patches.
             TimeForScienceScenario scenario = TimeForScienceScenario.Instance;
             if (scenario == null)
             {
@@ -59,8 +55,8 @@ namespace TimeForScience
             }
 
             // Anti-double-start: a click on the countdown button (or an action
-            // group / [x]_Science! re-trigger) must neither restart nor
-            // duplicate the run - swallow the deploy entirely.
+            // group / [x]_Science! re-trigger) must not restart or duplicate
+            // the run - swallow the deploy entirely.
             if (scenario.HasRun(module))
             {
                 __result = false;
@@ -99,10 +95,9 @@ namespace TimeForScience
         }
     }
 
-    /// <summary>
-    /// Aborts an active run before the stock reset proceeds - harmless on an
-    /// undeployed module, so it doubles as our "cancel" animation for free.
-    /// </summary>
+    /// <summary>Aborts an active run before the stock reset proceeds - harmless
+    /// on an undeployed module, so it doubles as a free "cancel"
+    /// animation.</summary>
     [HarmonyPatch]
     internal static class Patch_ResetExperiment_MoveNext
     {

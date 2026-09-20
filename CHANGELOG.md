@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.1] — Exclusion config additions and cleanup
+## v0.2.1 - Exclusion config additions and cleanup
 
 ### Added
 
@@ -11,7 +11,7 @@
 
 - Internal cleanup: removed leftover development diagnostic logging (per-run/per-patch debug messages) and trimmed overly verbose code comments. No behavior change.
 
-## [0.2.0] — Banked progress and RealBattery compatibility
+## v0.2.0 - Banked progress and RealBattery compatibility
 
 ### Added
 
@@ -28,7 +28,7 @@
 
 - The "Banked biomes" PAW group shows at most 6 rows per module (the rest collapse into a "+N more" line); all banked biomes still count fully toward a later Deploy regardless of whether they're shown.
 
-## [0.1.0] — First public release
+## v0.1.0 - First public release
 
 ### What it is
 

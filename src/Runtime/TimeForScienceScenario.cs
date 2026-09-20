@@ -7,12 +7,9 @@ using UnityEngine;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Per-frame tick for hidden experiment runs, across active/inactive/
-    /// unloaded vessels. Completion on a live module re-invokes the untouched
-    /// stock/DMagic/US2 method; on an unloaded vessel it injects a ScienceData
-    /// node directly and posts an inbox message.
-    /// </summary>
+    /// <summary>Per-frame tick for hidden runs across active, inactive and
+    /// unloaded vessels. Completion re-invokes the untouched stock/DMagic/US2
+    /// method, or injects a ScienceData node plus an inbox message.</summary>
     [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER)]
     public class TimeForScienceScenario : ScenarioModule
     {
@@ -76,11 +73,9 @@ namespace TimeForScience
             return FindRun(module) != null;
         }
 
-        /// <summary>
-        /// Registers a new hidden run; the Deploy button doubles as the live
-        /// countdown, re-triggers swallowed by the HasRun guard in the
-        /// patches. No-op if already active for this module.
-        /// </summary>
+        /// <summary>Registers a new hidden run; the Deploy button doubles as the
+        /// live countdown, re-triggers swallowed by the patches' HasRun guard.
+        /// No-op if one is already active for this module.</summary>
         internal void TryRegisterRun(
             ModuleScienceExperiment module,
             string subjectId,
@@ -158,11 +153,8 @@ namespace TimeForScience
             }
         }
 
-        /// <summary>
-        /// Removes the run and notifies the player: a screen message if its
-        /// vessel is the one currently being watched, an inbox message
-        /// otherwise.
-        /// </summary>
+        /// <summary>Removes the run and notifies the player: a screen message if
+        /// its vessel is the one being watched, an inbox message otherwise.</summary>
         private void AbortRunInternal(TimeForScienceRun run, ModuleScienceExperiment liveModule, Vessel ownerVessel, string locKey)
         {
             runs.Remove(run);
@@ -450,13 +442,11 @@ namespace TimeForScience
             return entry.BankedSeconds;
         }
 
-        /// <summary>
-        /// Draws run.ECRate * dt and eases run.Throttle toward what was
-        /// actually available, returning dt scaled by the throttle. Ramping
-        /// (not snapping) means a short draw failure only nudges progress.
-        /// </summary>
         private const float ThrottleRampPerSecond = 0.5f;
 
+        /// <summary>Draws run.ECRate * dt and eases run.Throttle toward what was
+        /// actually available, returning dt scaled by it. Ramping rather than
+        /// snapping means a short draw failure only nudges progress.</summary>
         private static double ApplyPowerThrottle(TimeForScienceRun run, ModuleScienceExperiment liveModule, Vessel vessel, double dt)
         {
             float needed = run.ECRate * (float)dt;
@@ -544,11 +534,9 @@ namespace TimeForScience
             return (float)(amount - remaining);
         }
 
-        /// <summary>
-        /// Finds whatever currently owns this run's part: a live PartModule
-        /// (active vessel first, then other loaded ones) or the
-        /// ProtoPartSnapshot on an unloaded vessel.
-        /// </summary>
+        /// <summary>Finds whatever currently owns this run's part: a live
+        /// PartModule (active vessel first, then other loaded ones) or the
+        /// ProtoPartSnapshot on an unloaded vessel.</summary>
         private static bool TryLocate(TimeForScienceRun run, out Vessel ownerVessel, out ModuleScienceExperiment liveModule, out ProtoPartSnapshot protoPart)
         {
             ownerVessel = null;
@@ -652,11 +640,9 @@ namespace TimeForScience
             return ScienceTiming.ComputeSubjectId(experiment, vessel.mainBody, situation, biome);
         }
 
-        /// <summary>
-        /// Completes a run on a live module. Shows the real results dialog
-        /// only if this run's vessel is active; otherwise completes silently
-        /// with the same inbox notification an unloaded completion sends.
-        /// </summary>
+        /// <summary>Completes a run on a live module: the real results dialog
+        /// only if its vessel is active, otherwise a silent completion with the
+        /// same inbox notification an unloaded completion sends.</summary>
         private bool CompleteRunLive(ModuleScienceExperiment module, TimeForScienceRun run, bool isActiveVessel)
         {
             SetCancelActive(module, false);
@@ -698,12 +684,9 @@ namespace TimeForScience
             return true;
         }
 
-        /// <summary>
-        /// Completes a run whose vessel is unloaded: injects a ScienceData
-        /// node into the protopart's saved ConfigNode and posts an inbox
-        /// message. Defers (returns false) for multi-slot DMagic/US2Advanced,
-        /// whose "keep" bookkeeping needs a live module to replicate safely.
-        /// </summary>
+        /// <summary>Completes a run on an unloaded vessel by injecting a
+        /// ScienceData node into the protopart and posting an inbox message.
+        /// Defers multi-slot DMagic/US2, whose bookkeeping needs a live module.</summary>
         private bool CompleteRunUnloaded(ProtoPartSnapshot protoPart, TimeForScienceRun run, Vessel ownerVessel)
         {
             if ((run.IsDMagic || run.IsUS2Advanced) && run.ExperimentsLimit > 1)
@@ -767,11 +750,9 @@ namespace TimeForScience
                 MessageSystemButton.ButtonIcons.COMPLETE));
         }
 
-        /// <summary>
-        /// Appends a time estimate to the Deploy button label while idle.
-        /// DMagic never refreshes its own guiName after OnStart, so without
-        /// this poll a moved vessel would keep a stale estimate.
-        /// </summary>
+        /// <summary>Appends a time estimate to the idle Deploy button label.
+        /// DMagic never refreshes its own guiName after OnStart, so without this
+        /// poll a moved vessel would keep a stale estimate.</summary>
         private void RefreshIdleLabels()
         {
             Vessel activeVessel = FlightGlobals.ActiveVessel;
@@ -956,11 +937,9 @@ namespace TimeForScience
             SetCancelActive(module, true);
         }
 
-        /// <summary>
-        /// Populates the "Banked biomes" PAW group: the active run first
-        /// (marked ">"), then bank entries sorted by remaining time. Fixed
-        /// row pool - overflow collapses into a "+N more" summary row.
-        /// </summary>
+        /// <summary>Populates the "Banked biomes" PAW group: the active run
+        /// first (marked ">"), then bank entries by remaining time. Fixed row
+        /// pool - overflow collapses into a "+N more" summary row.</summary>
         private void RefreshBankGroup(ModuleScienceExperiment module)
         {
             int rowCount = Patch_InjectCancelEvent.BankRowCount;

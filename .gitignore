@@ -8,7 +8,9 @@ src/.vs/
 # Internal development material — design decisions, test protocols, the
 # Claude Code project hub — not part of the shipped mod, kept local only.
 notes/
+screenshots/
 CLAUDE.md
+*.zip
 
 # OS/editor cruft
 .DS_Store

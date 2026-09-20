@@ -4,10 +4,8 @@ using KSP.Localization;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Difficulty Settings for EC consumption and banked progress, both off
-    /// by default. Applies in any game mode.
-    /// </summary>
+    /// <summary>Difficulty Settings for EC consumption and banked progress,
+    /// both off by default. Applies in any game mode.</summary>
     public class TimeForScienceSettings : GameParameters.CustomParameterNode
     {
         public override string Title => Localizer.Format("#LOC_T4S_ModName");
@@ -21,9 +19,8 @@ namespace TimeForScience
         [GameParameters.CustomParameterUI("#LOC_T4S_Settings_EnableEC", toolTip = "#LOC_T4S_Settings_EnableEC_Tooltip")]
         public bool EnableECConsumption = false;
 
-        // addTextField = false: the stock text box (DialogGUITextInput) always
-        // renders at flexible/full-row width regardless of any attribute here,
-        // overflowing the Difficulty Settings column - slider-only avoids it.
+        // addTextField = false: the stock text box always renders at full-row
+        // width whatever this attribute says, overflowing the settings column.
         [GameParameters.CustomFloatParameterUI("#LOC_T4S_Settings_ECRate", minValue = 0f, maxValue = 0.1f, stepCount = 100, displayFormat = "0.000", addTextField = false, toolTip = "#LOC_T4S_Settings_ECRate_Tooltip")]
         public float ECPerScienceRate = 0.01f;
 
@@ -40,9 +37,8 @@ namespace TimeForScience
 
         public override bool Interactible(MemberInfo member, GameParameters parameters)
         {
-            // Rate and rate-display only mean anything with EC consumption
-            // on - greyed out rather than hidden, so the dependency is
-            // visible (same pattern as SituationalAwareness's SaSettings).
+            // Rate and rate-display only mean anything with EC consumption on;
+            // greyed out rather than hidden, so the dependency stays visible.
             if (member.Name == nameof(ECPerScienceRate) || member.Name == nameof(ShowECRateInsteadOfTotal))
             {
                 return EnableECConsumption;
@@ -85,9 +81,8 @@ namespace TimeForScience
             }
         }
 
-        /// <summary>EC/s for this experiment right now, or 0 if the feature
-        /// is off - a single frozen value doubles as "disabled" and
-        /// "rate".</summary>
+        /// <summary>EC/s for this experiment right now, or 0 if the feature is
+        /// off - one frozen value doubles as "disabled" and "rate".</summary>
         internal static float ComputeECRate(ScienceExperiment experiment)
         {
             if (experiment == null || HighLogic.CurrentGame == null)

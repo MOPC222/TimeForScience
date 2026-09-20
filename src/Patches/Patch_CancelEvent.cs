@@ -3,20 +3,17 @@ using KSP.Localization;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Injects the "Cancel observation" button and the inert "Banked biomes"
-    /// row pool, both hidden by default and toggled by TimeForScienceScenario.
-    /// OnStart is well above Mono's inline limit, so a plain postfix works
-    /// (and reaches DMagic too, since its OnStart calls base.OnStart first).
-    /// </summary>
+    /// <summary>Injects the "Cancel observation" button and the inert "Banked
+    /// biomes" row pool, both hidden by default and toggled by the scenario. A
+    /// plain postfix also reaches DMagic, via its base.OnStart call.</summary>
     [HarmonyPatch(typeof(ModuleScienceExperiment), "OnStart")]
     internal static class Patch_InjectCancelEvent
     {
         internal const string CancelEventName = "T4S_CancelObservation";
 
-        // Fixed pool of inert BaseEvents sharing one groupName, same technique
-        // as the cancel button: UIPartActionWindow groups purely by that name
-        // string and skips inactive events, so an empty pool shows nothing.
+        // Fixed pool of inert BaseEvents sharing one groupName: the PAW groups
+        // by that name alone and skips inactive events, so an all-inactive pool
+        // renders no group at all.
         internal const int BankRowCount = 6;
         internal const string BankGroupName = "T4S_Banking";
 

@@ -1,10 +1,8 @@
 namespace TimeForScience
 {
-    /// <summary>
-    /// One tracked experiment run. Subject and duration are frozen at deploy
-    /// time. Tracked by part flightID + module index rather than by vessel,
-    /// so a run follows its part through docking/undocking.
-    /// </summary>
+    /// <summary>One tracked experiment run; subject and duration frozen at
+    /// deploy time. Keyed by part flightID + module index, not by vessel, so a
+    /// run follows its part through docking/undocking.</summary>
     internal class TimeForScienceRun
     {
         internal uint PartFlightId;

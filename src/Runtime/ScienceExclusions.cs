@@ -2,10 +2,9 @@ using System.Collections.Generic;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Per-experimentID exclusions from timing and/or EC, loaded lazily from
-    /// Config/Exclusions.cfg so there's no dependency on GameDatabase timing.
-    /// </summary>
+    /// <summary>Per-experimentID exclusions from timing and/or EC, loaded
+    /// lazily from Config/Exclusions.cfg so there's no dependency on
+    /// GameDatabase load order.</summary>
     internal static class ScienceExclusions
     {
         private static readonly HashSet<string> timerExclusions = new HashSet<string>();
@@ -25,9 +24,8 @@ namespace TimeForScience
             return ecExclusions.Contains(experimentId);
         }
 
-        /// <summary>Timer-excluded experiments never bank anyway (no run is
-        /// ever registered for them) - this only matters for a timed
-        /// experiment the player wants excluded from banking specifically.</summary>
+        /// <summary>Only meaningful for a timed experiment: timer-excluded ones
+        /// never register a run, so they never bank in the first place.</summary>
         internal static bool IsExcludedFromBanking(string experimentId)
         {
             EnsureLoaded();

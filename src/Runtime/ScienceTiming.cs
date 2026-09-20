@@ -2,11 +2,9 @@ using System;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Shared math for freezing a science subject at deploy time and turning
-    /// its value into a run duration, used identically by the stock, DMagic
-    /// and US2 deploy paths.
-    /// </summary>
+    /// <summary>Shared math for freezing a science subject at deploy time and
+    /// turning its value into a run duration, used identically by the stock,
+    /// DMagic and US2 deploy paths.</summary>
     internal static class ScienceTiming
     {
         // Below this, a run is considered "free": instantaneous, untouched.
@@ -96,11 +94,9 @@ namespace TimeForScience
             }
         }
 
-        /// <summary>
-        /// Formats as "1h 12m 54s"/"1m 39s"/"39s", dropping leading zero
-        /// units. No stock utility fits: KSPUtil.PrintTimeCompact uses the
-        /// in-game calendar's 6-hour Kerbin days instead of plain h/m/s.
-        /// </summary>
+        /// <summary>Formats as "1h 12m 54s"/"1m 39s"/"39s", dropping leading
+        /// zero units. No stock utility fits: KSPUtil.PrintTimeCompact uses the
+        /// in-game calendar's 6-hour days instead of plain h/m/s.</summary>
         internal static string FormatRemaining(double secondsRemaining)
         {
             int total = (int)Math.Ceiling(Math.Max(secondsRemaining, 0));

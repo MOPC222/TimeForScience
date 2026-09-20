@@ -3,11 +3,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// RunExperiment(bool,bool) is US2's analogue of DMagic's runExperiment -
-    /// called right before ScienceData creation, well above Mono's inline
-    /// limit so a plain prefix works. Gated by Prepare(): no-op without US2.
-    /// </summary>
+    /// <summary>US2's analogue of DMagic's runExperiment, called right before
+    /// ScienceData creation and well above Mono's inline limit, so a plain
+    /// prefix works. Gated by Prepare(): no-op without US2.</summary>
     [HarmonyPatch]
     internal static class Patch_US2_RunExperiment
     {

@@ -3,11 +3,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Cached reflection access to the private ModuleScienceExperiment
-    /// members we need but can't reach directly - the module itself stays
-    /// stock, never subclassed or renamed.
-    /// </summary>
+    /// <summary>Cached reflection access to the private ModuleScienceExperiment
+    /// members we need - the module itself stays stock, never subclassed or
+    /// renamed.</summary>
     internal static class StockReflection
     {
         private static readonly FieldInfo MseSituationField =

@@ -25,11 +25,6 @@
     RealBattery "I consumed this much energy", it does not ask RealBattery to hand energy over.
     Only call it for energy your own mod has already accounted for as spent. RealBattery is the
     sole authority on how that translates into StoredCharge drain, wear and BatteryLife.
-
-    Vendored into TimeForScience 2026-08 (GameData/TimeForScience/notes/ec-consumption.md) -
-    provided directly by the author, who is also RealBattery's author. Supersedes the archived
-    command-style RealBatteryWrapper.cs (DrainEc/ChargeEc) removed 2026-07-21. Keep this file
-    verbatim (namespace included) so future updates can just be copy-pasted back in.
 */
 using System;
 using System.Reflection;

@@ -4,11 +4,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Soft-dependency access to DMModuleScienceAnimateGeneric, resolved by
-    /// name (no compile-time reference to the DMagic DLL); tries both the
-    /// suffixed and un-suffixed namespace across DMagic versions.
-    /// </summary>
+    /// <summary>Soft-dependency access to DMModuleScienceAnimateGeneric,
+    /// resolved by name (no compile-time reference to the DMagic DLL); tries
+    /// both the suffixed and un-suffixed namespace across versions.</summary>
     internal static class DMagicBridge
     {
         internal static readonly Type ModuleType;
@@ -77,9 +75,9 @@ namespace TimeForScience
             return TotalScienceLevelField != null ? (float)TotalScienceLevelField.GetValue(module) : 1f;
         }
 
-        /// <summary>Non-persistent (part-config constant): frozen into the run at
-        /// registration so background completion doesn't need a live module to
-        /// know whether this is a single-slot or multi-slot experiment.</summary>
+        /// <summary>Non-persistent part-config constant, frozen into the run at
+        /// registration so background completion can tell single-slot from
+        /// multi-slot without a live module.</summary>
         internal static int GetExperimentsLimit(ModuleScienceExperiment module)
         {
             return ExperimentsLimitField != null ? (int)ExperimentsLimitField.GetValue(module) : 1;

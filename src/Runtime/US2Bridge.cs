@@ -4,11 +4,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// Soft-dependency access to US2's USAdvancedScience: only RunExperiment
-    /// and experimentsLimit need resolving, other fields are public/inherited.
-    /// USSimpleScience needs no bridge - it uses the plain stock coroutine.
-    /// </summary>
+    /// <summary>Soft-dependency access to US2's USAdvancedScience: only
+    /// RunExperiment and experimentsLimit need resolving, the rest is public or
+    /// inherited. USSimpleScience uses the plain stock coroutine.</summary>
     internal static class US2Bridge
     {
         internal static readonly Type ModuleType;

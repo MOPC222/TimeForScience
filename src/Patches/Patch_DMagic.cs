@@ -3,12 +3,9 @@ using HarmonyLib;
 
 namespace TimeForScience
 {
-    /// <summary>
-    /// runExperiment(bool silent) is DMagic's analogue of stock's
-    /// OnScienceComplete - called right before data creation and the results
-    /// dialog, well above Mono's inline limit so a plain prefix works here.
-    /// All patches gated by Prepare(): no-op if DMagic isn't installed.
-    /// </summary>
+    /// <summary>DMagic's analogue of stock's OnScienceComplete, called right
+    /// before data creation and the results dialog, well above Mono's inline
+    /// limit. All patches here gated by Prepare(): no-op without DMagic.</summary>
     [HarmonyPatch]
     internal static class Patch_DMagic_RunExperiment
     {
@@ -65,7 +62,7 @@ namespace TimeForScience
             string subjectId = ScienceTiming.ComputeSubjectId(experiment, body, situation, biome);
 
             // Mirror makeScience: DMagic scales the data amount by
-            // totalScienceLevel (RP-0 hook, 1.0 in this install) and does not
+            // totalScienceLevel (an RP-0 hook, 1.0 otherwise) and does not
             // apply scienceValueRatio.
             float dataAmount = experiment.baseValue * experiment.dataScale * DMagicBridge.GetTotalScienceLevel(__instance);
             float scienceValue = ScienceTiming.ComputeScienceValueForData(dataAmount, experiment, body, situation, biome, subjectId, 1f);
