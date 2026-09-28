@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.2 - Brazilian Portuguese
+
+- Added **Brazilian Portuguese** (`pt-br`) - thanks to **celino**.
+
 ## v0.2.1 - Exclusion config additions and cleanup
 
 ### Added
